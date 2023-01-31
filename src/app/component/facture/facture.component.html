@@ -1,0 +1,162 @@
+<div>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Gestion Factures</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/clients" routerLinkActive="active">Clients</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/factures">Factures</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"routerLink="/fournisseurs">Fournisseurs</a>
+          </li>
+          <!-- Button trigger modal -->
+
+
+        </ul>
+
+
+      </div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFacture">
+        Ajouter une facture
+      </button>
+    </div>
+  </nav>
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="addFacture" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1  class="modal-title fs-5" id="exampleModalLabel">Ajouter une facture</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="detailFacture">
+            <hr/>
+            <div class="mb-3">
+              <label for="dateCreation" class="form-label">Date Facture</label>
+              <input type="date" formControlName="dateCreation" class="form-control" id="dateCreation">
+
+            </div>
+            <hr/>
+            <div class="mb-3">
+              <label for="montantFacture" class="form-label">Montant</label>
+              <input type="number" formControlName="montantFacture" class="form-control" id="montantFacture">
+            </div>
+            <hr/>
+            <p>choissisez un client</p>
+
+
+            <select   formControlName="idClient" class="form-select"  >
+              <option [ngValue]="null" disabled>Choose your client</option>
+              <option    *ngFor="let client of listCient" [ngValue]="client.idClient" >{{client.nom}} {{client.prenom}}</option>
+            </select>
+
+            <hr/>
+            <p>choissisez un fournisseur</p>
+
+
+            <select   formControlName="idFournisseur" class="form-select"  >
+              <option [ngValue]="null" disabled>choissisez un fournisseur</option>
+              <option    *ngFor="let four of listFournisseurs" [ngValue]="four.idFournisseur" >{{four.libelle}} | {{four.categourieFournisseur}}</option>
+            </select>
+            
+
+            <button type="button" class="btn btn-secondary">Close</button>
+            <button type="button" (click)="addFacture1()" data-bs-dismiss="modal" class="btn btn-primary">Ajouter
+              Facture</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">montant</th>
+        <th scope="col">date de facturation</th>
+        <th scope="col">id client</th>
+        <th scope="col">actions</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fact of facturesList">
+        <th>{{fact.idFacture}}</th>
+        <td>{{fact.montantFacture}}</td>
+        <td>{{fact.dateCreation}}</td>
+        <td>{{fact.idClient}}</td>
+        <td>
+          <button type="button" class="btn btn-outline-danger" (click)="deleteFacture(fact)">supprimer </button>
+          <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" (click)="editFacture(fact)"
+            data-bs-target="#modifierFacture">modifier</button>
+
+
+        </td>
+        <!-- Modal -->
+        <div class="modal fade" id="modifierFacture" tabindex="-1" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">modifier Facture</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="detailFacture">
+                  <div class="mb-3">
+
+                    <label for="idFacture" class="form-label">id facture</label>
+                    <input type="number" formControlName="idFacture" class="form-control" id="idFacture">
+
+                    <label for="dateCreation" class="form-label">Date Facture</label>
+                    <input type="date" formControlName="dateCreation" class="form-control" id="dateCreation">
+
+                  </div>
+                  <div class="mb-3">
+                    <label for="montantFacture" class="form-label">Montant</label>
+                    <input type="number" formControlName="montantFacture" class="form-control" id="montantFacture">
+                  </div>
+                  <p>choissisez un client</p>
+
+
+                  <select   formControlName="idClient" class="form-select"  >
+                    <option [ngValue]="null" disabled>selectez votre client</option>
+                    <option    *ngFor="let client of listCient" [ngValue]="client.idClient" >{{client.nom}} {{client.prenom}}</option>
+                  </select>
+
+                  <button type="button" class="btn btn-secondary">Close</button>
+                  <button type="button" (click)="updateFacture()" data-bs-dismiss="modal"
+                    class="btn btn-primary">modifier Facture</button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+
+
+
+
+
+</div>

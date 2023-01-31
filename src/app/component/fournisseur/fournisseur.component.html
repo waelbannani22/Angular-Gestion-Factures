@@ -1,0 +1,146 @@
+<div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Gestion des fournisseurs</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" routerLink="/clients"
+                            routerLinkActive="active">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" routerLink="/factures">Factures</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" routerLink="/fournisseurs">Fournisseurs</a>
+                    </li>
+                    <!-- Button trigger modal -->
+
+
+                </ul>
+
+
+            </div>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFacture">
+                Ajouter un fournisseur
+            </button>
+        </div>
+    </nav>
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addFacture" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un fournisseur</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="detailFournisseur">
+                        <div class="mb-3">
+                            <label for="libelle" class="form-label">Libelle</label>
+                            <input type="text" formControlName="libelle" class="form-control" id="libelle">
+
+                        </div>
+
+
+                        <label for="categourieFournisseur">Categorie du fournisseur</label>
+                        <select   formControlName="categourieFournisseur" class="form-select"  >
+                            <option value="ORDINAIRE" >Ordinaire</option>
+                            <option value="CONVENTIONE" >Conventionné</option>
+                          </select>
+                       
+
+                        <button type="button" class="btn btn-secondary">Close</button>
+                        <button type="button" (click)="addFournisseur()" data-bs-dismiss="modal"
+                            class="btn btn-primary">Ajouter
+                            fournisseur</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">libelle</th>
+                <th scope="col">Categorie</th>
+              
+                <th scope="col">actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let four of listFournisseurs">
+                <th>{{four.idFournisseur}}</th>
+                <td>{{four.libelle}}</td>
+                <td>{{four.categourieFournisseur}}</td>
+               
+                <td>
+                    <button type="button" class="btn btn-outline-danger" (click)="deleteFournisseur(four)">supprimer
+                    </button>
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                        (click)="editFournisseur(four)" data-bs-target="#modifierFacture">modifier</button>
+
+
+                </td>
+                <!-- Modal -->
+                <div class="modal fade" id="modifierFacture" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">modifier Facture</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="detailFournisseur">
+                                    <div class="mb-3">
+
+                                        <label for="idFournisseur" class="form-label">id client</label>
+                                        <input  type="text" formControlName="idFournisseur" class="form-control"
+                                            id="idFournisseur" >
+
+                                        <label for="libelle" class="form-label">libelle</label>
+                                        <input type="text" formControlName="libelle" class="form-control" id="libelle">
+
+                                        <label for="categourieFournisseur">Categorie du fournisseur</label>
+                                        <select   formControlName="categourieFournisseur" class="form-select"  >
+                                            <option value="ORDINAIRE" >Ordinaire</option>
+                                            <option value="CONVENTIONE" >Conventionné</option>
+                                          </select>
+                                    </div>
+
+                                    <button type="button" class="btn btn-secondary">Close</button>
+                                    <button type="button" (click)="updateFournisseurs()" data-bs-dismiss="modal"
+                                        class="btn btn-primary">modifier fournisseur</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+</div>
